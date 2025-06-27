@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4 text-center">Blog Posts</h2>
+            {% for post in posts %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title"><a href="{{ url_for('post_detail', post_id=post.id) }}">{{ post.title }}</a></h4>
+                    <h6 class="card-subtitle mb-2 text-muted">By <a href="{{ url_for('profile', username=post.author.username) }}">{{ post.author.username }}</a> on {{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</h6>
+                    <p class="card-text">{{ post.content[:200] }}{% if post.content|length > 200 %}...{% endif %}</p>
+                    <a href="{{ url_for('post_detail', post_id=post.id) }}" class="btn btn-primary btn-sm">Read More</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-info text-center">No posts yet!</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %} 
